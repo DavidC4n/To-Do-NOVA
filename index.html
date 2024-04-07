@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>To-Do List</title>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <div class="left">
+            <span class="app-name">To Do</span>
+        </div>
+        <div class="center">
+            <input type="text" id="searchInput" placeholder="Buscar tarea...">
+        </div>
+        <div class="right">
+            <button id="editBtn"><img src="edit_icon.png" alt="Editar"></button>
+            <button id="addBtn" onclick="openNewTaskPage()"><img src="add_icon.png" alt="Añadir"></button>
+        </div>
+    </nav>
+
+    <!-- Contenedor principal de la aplicación -->
+    <div class="container">
+        <div class="today-tasks">
+            <h2>Hoy</h2>
+            <div id="todayTasksList" class="task-list"></div>
+        </div>
+        <div class="upcoming-tasks">
+            <h2>Próximamente</h2>
+            <div id="upcomingTasksList" class="task-list"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

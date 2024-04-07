@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Nueva Nota</title>
+</head>
+<body>
+    <!-- Contenedor principal de la página de nueva tarea -->
+    <div class="container">
+        <form id="taskForm">
+            <div class="left-section">
+                <h2>Nueva Nota</h2>
+                <label for="titleInput">Título:</label>
+                <input type="text" id="titleInput" placeholder="Título de la tarea">
+                <label for="dateInput">Fecha:</label>
+                <input type="date" id="dateInput">
+                <label for="timeInput">Hora:</label>
+                <input type="time" id="timeInput">
+                <label for="colorInput">Color:</label>
+                <input type="color" id="colorInput" value="#38B6FF">
+            </div>
+            <div class="right-section">
+                <h3>Detalles</h3>
+                <textarea id="detailsInput" placeholder="Detalles de la tarea..."></textarea>
+                <div class="btn-container">
+                    <button type="submit">Agregar Nota</button>
+                    <button type="button" onclick="cancel()">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

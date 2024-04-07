@@ -1,0 +1,228 @@
+
+
+Instrucciones CHAT GPT.
+
+Compórtate como un programador con muchos años de experiencia. Quiero que me guíes paso a paso para programar mi aplicación tal y cómo yo quiero. Quiero que me des explicaciones breves pero claras para lograr programar de forma correcta y me proporciones el código HTML, CSS o JS según sea necesario. 
+
+Te pongo en contexto; estoy realizando un proyecto de una aplicación web de To Do; la cual permitirá:
+1.- Añadir tareas nuevas (las cuales se crearán en una nueva pestaña o ventana y la nueva tarea se puede personalizar asignándole un título, fecha límite en la que se realizará, hora y color, además de agregar detalles a esa tarea). 
+2.- También se podrá editar las tareas para cambiar los aspectos anteriores.
+3.- También eliminar la/las tareas seleccionadas.
+
+Tengo un código HTML, CSS, JS que realicé anteriormente. Te podrá ser útil para no partir desde 0 y poder tener algo de base. Este te lo proporcionaré en los siguientes mensajes.
+
+Por ahora quiero que me digas si necesitas algo más para poder ayudarme de forma correcta y sin errores.
+ 
+Código TO DO [v1]
+
+HTML – index.html
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Definición del tipo de documento y configuración de caracteres y viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Enlace al archivo de estilos externo -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Título de la página -->
+    <title>To-Do List</title>
+</head>
+<body>
+    <!-- Contenedor principal de la aplicación -->
+    <div class="container">
+        <!-- Encabezado principal de la aplicación -->
+        <h1>To-Do List</h1>
+
+        <!-- Cuadro de entrada para nuevas tareas -->
+        <input type="text" id="taskInput" placeholder="Nueva tarea">
+
+        <!-- Botón para agregar nuevas tareas -->
+        <button onclick="addTask()">Agregar</button>
+
+        <!-- Contenedor para la lista de tareas --> 
+        <div id="taskList" class="task-list"></div>
+    </div>
+
+    <!-- Enlace al archivo de scripts externo -->
+    <script src="script.js"></script>
+</body>
+</html>
+
+CSS – style.css
+
+body {
+    /* Establece la fuente predeterminada y otros estilos generales para el cuerpo del documento */
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f5f5;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ajusta la altura al 100% de la altura de la ventana */
+}
+
+.container {
+    /* Estilos para el contenedor principal de la aplicación */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    /* Estilos para el encabezado principal de la aplicación */
+    color: #3498db; /* Color azul */
+}
+
+input[type="text"] {
+    /* Estilos para el cuadro de entrada de texto */
+    padding: 8px;
+    margin: 10px 0;
+    width: 60%;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+}
+
+button {
+    /* Estilos para los botones */
+    padding: 8px 16px;
+    background-color: #3498db; /* Color de fondo azul */
+    color: #ffffff; /* Color del texto blanco */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    /* Estilos para el estado hover (cuando el mouse pasa sobre el botón) */
+    background-color: #2980b9; /* Color de fondo azul más oscuro */
+}
+
+.task-list {
+    /* Estilos para el contenedor de la lista de tareas */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task {
+    /* Estilos para cada tarea en la lista */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    width: 60%;
+    margin: 5px;
+    border-radius: 4px;
+}
+
+.task:hover {
+    /* Estilos para el estado hover de una tarea */
+    background-color: #ecf0f1; /* Color de fondo gris claro */
+}
+
+.task input {
+    /* Estilos para el cuadro de entrada de texto dentro de una tarea */
+    border: none;
+    margin-right: 8px;
+    flex: 1;    
+}
+
+.task button {
+    /* Estilos para los botones dentro de una tarea */
+    margin-right: 4px; /* Espaciado derecho entre botones */
+}
+
+ul {
+    /* Estilos generales para listas desordenadas */
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    /* Estilos para elementos de lista (li) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ecf0f1; /* Borde inferior gris claro */
+}
+
+li:last-child {
+    /* Estilos para el último elemento de la lista (sin borde inferior) */
+    border-bottom: none;
+}
+
+JAVASCRIPT – script.js
+
+// Variable para asignar identificadores únicos a las tareas
+let taskId = 0;
+
+// Función para agregar una nueva tarea a la lista
+function addTask() {
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    // Verifica que el cuadro de entrada no esté vacío
+    if (taskInput.value !== "") {
+        // Crea un nuevo elemento div para representar la tarea
+        const div = document.createElement("div");
+        div.classList.add("task"); // Agrega la clase "task" al div
+        div.innerHTML = `<input type="text" value="${taskInput.value}" readonly>
+            <button onclick="editTask(${taskId})">Editar</button>
+            <button onclick="removeTask(${taskId})">Eliminar</button>`;
+        div.setAttribute("id", `task_${taskId}`); // Asigna un ID único al div
+        taskList.appendChild(div); // Agrega la tarea al contenedor de la lista
+
+        taskInput.value = ""; // Limpia el cuadro de entrada después de agregar una tarea
+        taskId++; // Incrementa el identificador único para la próxima tarea
+    }
+}
+
+// Función para editar una tarea seleccionada
+function editTask(id) {
+    const taskInput = document.getElementById("taskInput");
+    const selectedTask = document.getElementById(`task_${id}`);
+    const taskText = selectedTask.querySelector("input");
+
+    // Activa o desactiva el modo de solo lectura del cuadro de entrada de texto
+    if (taskText.readOnly) { //Verifica si el cuadro de entrada de texto está actualmente en modo de solo lectura.
+        taskText.readOnly = false; // Si está en modo de solo lectura, lo cambia a modo de edición.
+        taskText.focus(); // Coloca el foco en el cuadro de entrada de texto para que el usuario pueda comenzar a editar inmediatamente.
+    } else { //Si no está en modo de solo lectura
+        taskText.readOnly = true; //Cambia de nuevo al modo de solo lectura.
+        taskInput.value = taskText.value; //Asigna el valor actual del cuadro de entrada de texto de la tarea seleccionada
+    }
+}
+
+// Función para eliminar una tarea
+function removeTask(id) {
+    const task = document.getElementById(`task_${id}`);
+    task.parentNode.removeChild(task); // Elimina la tarea del DOM
+}
+ 
+Instrucciones requerimientos CHAT GPT
+
+Quiero que mi la ventana principal tenga una barra arriba, la cual contendrá:
+- izquierda; el nombre de la app (To Do)
+- Centrado; una barra de búsqueda (para buscar-seleccionar tareas de forma rápida)
+- derecha; botón de editar y de añadir (estos botones tendrán un icono/img)
+
+*El botón de editar permitirá seleccionar una o múltiples tareas para poder eliminarlas de forma inmediata (al momento de eliminar se mostrará una ventana para asegurarse de que se eliminará la/las tareas). También al momento de seleccionar las notas abajo en el centro mostrará los elementos seleccionados y a un lado de eso el icono de eliminar.
+
+*El botón de añadir abrirá una nueva pestaña (llamada Nueva Nota) la cual servirá para crear la tarea. En esta pestaña, encontraremos 2 contenedores principales;
+En el primero *lado izquierdo: se asignará un título, fecha, hora (a través de un calendario) y color (con un colorpicker y también poniendo el código hex)
+En el segundo *lado derecho: se agregarán los detalles de la nota (el usuario podrá escribir). Debajo de ese contenedor estará el botón de agregar nota y cancelar.
+
+En cuanto a cómo se mostrarán las tareas, serán de la siguiente forma:
+-	En dos contendedores (1- Hoy *del lado izquierdo, y 2- Próximamente *lado derecho)
+-	Los contenedores mostrarán el título de la sección (Hoy o Próximamente), debajo mostrarán la lista de tareas. Estas tareas c/u vendrá dentro de una forma circular/rectangular (la cual contendrá el nombre de la tarea, un círculo que al hacerle clic marcará que la tarea ha sido completada, y el fondo de este contenedor de tareas deberá ser del color que el usuario asignó anteriormente durante su creación).
+-	A la derecha de la forma circular/rectangular que te mencioné, mostrará la hora (formato 24 hrs) en la que se debe realizar la tarea (la cual fue asignada anteriormente durante la creación de la tarea)
+-	En cuanto al contenedor de próximamente mostrará las tareas que no son para el día de hoy, y serán separadas por fecha (se debe mostrar la fecha)
+
+En cuanto a los colores, quiero que uses para la barra este #38B6FF, este para los contenedores: #F2F2F2
+Si tienes alguna duda házmelo saber, si tienes todo claro dímelo para poder comenzar a programar!
